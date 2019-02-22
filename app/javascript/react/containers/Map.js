@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 
 import LocationPermission from '../components/LocationPermission.js'
-import SetLocation from '../components/SetLocation.js'
+import LocationSearchInput from '../components/LocationSearchInput.js'
 
 class Map extends Component {
   constructor(props) {
@@ -14,11 +14,15 @@ class Map extends Component {
   }
 
   render() {
+
+    let locationPrompt
     let mapVisibility
     if (this.props.user.info.location_permission) {
       mapVisibility = "visible"
+      locationPrompt = <LocationSearchInput />
     } else {
       mapVisibility = "hidden"
+      locationPrompt = <LocationPermission />
     }
 
     let defaultCenter = {
@@ -42,8 +46,7 @@ class Map extends Component {
           >
           </GoogleMapReact>
         </div>
-        <LocationPermission />
-        <SetLocation />
+        {locationPrompt}
       </div>
         );
       }

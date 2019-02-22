@@ -43,7 +43,6 @@ const getUser = () => {
   }
 }
 
-
 const allowLocationUse = (userId) => {
   return dispatch => {
     return fetch(`/api/v1/users/${userId}.json`, {
@@ -64,9 +63,31 @@ const allowLocationUse = (userId) => {
   }
 }
 
+const setLocation = (userId, latLng) => {
+  console.log("firing setLocation");
+  return dispatch => {
+    return fetch(`/api/v1/users/${userId}.json`, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify( { latLng: latLng })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      }
+    })
+    .then(user => {
+      dispatch(getUserSuccess(user))
+    })
+  }
+}
 
 export {
   users,
   getUser,
-  allowLocationUse
+  allowLocationUse,
+  setLocation
 }
