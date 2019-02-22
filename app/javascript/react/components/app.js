@@ -4,7 +4,6 @@ import { Router, browserHistory, Route } from 'react-router'
 
 import Landing from '../containers/Landing';
 
-
 export const App = (props) => {
   return (
     <Provider store={props.store}>
