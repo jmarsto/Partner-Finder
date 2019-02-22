@@ -50,7 +50,9 @@ const allowLocationUse = (userId) => {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json' },
-      credentials: 'same-origin'
+      credentials: 'same-origin',
+      body: JSON.stringify( { allowLocation: true })
+
     })
     .then(response => {
       if (response.ok) {
