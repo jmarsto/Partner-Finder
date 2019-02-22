@@ -21,22 +21,17 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def geolocated_user(lat_lng = nil)
+    @user = current_user
     if lat_lng
-      lat = lat_lng["lat"]
-      lng = lat_lng["lng"]
+      @user.lat = lat_lng["lat"]
+      @user.lng = lat_lng["lng"]
     else
       location_data = Geocoder.search(current_user.current_sign_in_ip).first.data
-      lat = '%0.6f' % location_data["lat"]
-      lng = '%0.6f' % location_data["lon"]
+      @user.lat = '%0.6f' % location_data["lat"]
+      @user.lng = '%0.6f' % location_data["lon"]
     end
 
-    @user = {
-      id: current_user.id,
-      email: current_user.email,
-      location_permission: current_user.location_permission,
-      lat: lat.to_f,
-      lng: lng.to_f
-    }
+    @user.save
 
     return @user
   end
