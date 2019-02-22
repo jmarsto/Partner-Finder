@@ -12,19 +12,12 @@ class LocationPermission extends Component {
 
   render() {
 
-    let locationButtonDisplay
-    if (this.props.locationPermission) {
-      locationButtonDisplay = "none"
-    } else {
-      locationButtonDisplay = "inline-block"
-    }
-
     let allowLocation = () => {
       this.props.allowLocationUse(this.props.userId)
     }
 
     return (
-      <div style={{ display: locationButtonDisplay }}>
+      <div>
         <button onClick={allowLocation}>Use my Location</button>
       </div>
     )
