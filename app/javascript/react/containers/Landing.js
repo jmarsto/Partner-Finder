@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { getUser } from '../modules/users';
-import Map from './Map';
+import Display from './Display';
+import Sidebar from './Sidebar';
 
 
 class Landing extends Component {
@@ -16,8 +17,13 @@ class Landing extends Component {
 
   render() {
     return (
-      <div>
-        <Map />
+      <div className="row">
+        <div className="medium-3 columns">
+          <Sidebar />
+        </div>
+        <div className="medium-13 columns">
+          <Display />
+        </div>
       </div>
     )
   }
