@@ -37,7 +37,7 @@ class Map extends Component {
 
     return (
       <div>
-        <div style={{ height: '80vh', width: '80%', margin: "auto", marginTop: "10px", visibility: mapVisibility }}>
+        <div style={{ height: '80vh', visibility: mapVisibility }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: "AIzaSyC2OOyKO15UdGHpZvog3vqzv6ULUi0zVVM" }}
             defaultCenter={defaultCenter}
