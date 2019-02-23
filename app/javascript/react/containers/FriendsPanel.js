@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import PreferencePanel from './PreferencePanel'
-import FriendsPanel from './FriendsPanel'
-
-class SideBar extends Component {
+class FriendsPanel extends Component {
   constructor(props) {
     super(props)
   }
 
   render() {
     return (
-      <div>
-        <div className="menu vertical">
-          <h1>sidebar</h1>
-          <PreferencePanel />
-          <FriendsPanel />
-        </div>
+      <div className="preference-panel row">
+        <h4>friends</h4>
+        
       </div>
     )
   }
@@ -36,4 +30,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SideBar)
+)(FriendsPanel)

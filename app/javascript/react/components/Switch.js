@@ -1,8 +1,8 @@
 import React from 'react';
 
-
 const Switch = props => {
   return (
+    
     <div className="switch">
       <input className="switch-input" id="defaultSwitch" type="checkbox" name="defaultSwitch" />
       <label className="switch-paddle" htmlFor="defaultSwitch">
