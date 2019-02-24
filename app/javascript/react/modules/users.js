@@ -2,7 +2,8 @@ const initialState = {
   user: {
     lat: null,
     lng: null,
-    id: null
+    id: null,
+    location_permission: false
   }
 };
 
