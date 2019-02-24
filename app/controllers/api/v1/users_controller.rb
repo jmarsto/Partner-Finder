@@ -7,7 +7,9 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     if params["latLng"]
-      current_user.update_attributes({ lat: params["latLng"]["lat"], lng: params["latLng"]["lng"] })
+      lat = params["latLng"]["lat"]
+      lng = params["latLng"]["lng"]
+      current_user.update_attributes({ lat: lat, lng: lng })
     elsif params["allowLocation"]
       current_user.update_attribute(:location_permission, true)
       geolocate_user_ip
