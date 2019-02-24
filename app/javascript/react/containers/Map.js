@@ -17,7 +17,7 @@ class Map extends Component {
 
     let locationPrompt
     let mapVisibility
-    if (this.props.user.info.location_permission) {
+    if (this.props.user.location_permission) {
       mapVisibility = "visible"
       locationPrompt = <LocationSearchInput />
     } else {
@@ -31,8 +31,8 @@ class Map extends Component {
     }
 
     let center = {
-      lat: this.props.user.info.lat,
-      lng: this.props.user.info.lng
+      lat: this.props.user.lat,
+      lng: this.props.user.lng
     }
 
     return (

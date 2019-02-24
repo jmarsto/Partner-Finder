@@ -2,17 +2,14 @@ const initialState = {
   user: {
     lat: null,
     lng: null,
-    info: {
-      id: null
-    }
+    id: null
   }
 };
 
 const users = (state = initialState, action) => {
   switch(action.type) {
     case GET_USER_SUCCESS:
-      let user = {...state.user, info: action.user}
-      return {...state, user: user}
+      return {...state, user: action.user}
     default:
       return state;
   }
@@ -66,7 +63,6 @@ const allowLocationUse = (userId) => {
 }
 
 const setLocation = (userId, latLng) => {
-  console.log("firing setLocation");
   return dispatch => {
     return fetch(`/api/v1/users/${userId}.json`, {
       method: 'PATCH',

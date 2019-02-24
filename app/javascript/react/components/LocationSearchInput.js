@@ -70,7 +70,7 @@ class LocationSearchInput extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.users.user.info.id,
+    userId: state.users.user.id,
   }
 }
 

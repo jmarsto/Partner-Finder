@@ -26,8 +26,8 @@ class LocationPermission extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.users.user.info.id,
-    locationPermission: state.users.user.info.location_permission
+    userId: state.users.user.id,
+    locationPermission: state.users.user.location_permission
   }
 }
 
