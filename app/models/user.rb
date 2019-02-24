@@ -6,4 +6,7 @@ class User < ApplicationRecord
 
   has_many :memberships
   has_many :gyms, through: :memberships
+
+  has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships
 end
