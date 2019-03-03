@@ -11,6 +11,11 @@ class LocationSearchInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { address: '' };
+    this.clearForm = this.clearForm.bind(this)
+  }
+
+  clearForm = () => {
+    this.setState({ address: '' })
   }
 
   handleChange = address => {
@@ -22,6 +27,7 @@ class LocationSearchInput extends React.Component {
       .then(results => getLatLng(results[0]))
       .then(latLng => this.props.setUserLocation(this.props.userId, latLng))
       .catch(error => console.error('Error', error));
+    this.clearForm();
   };
 
   render() {
@@ -35,7 +41,7 @@ class LocationSearchInput extends React.Component {
           <div>
             <input
               {...getInputProps({
-                placeholder: 'Search Places ...',
+                placeholder: 'Change location...',
                 className: 'location-search-input',
               })}
             />
