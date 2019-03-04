@@ -6,7 +6,7 @@ class Api::V1::GymsController < ApplicationController
 
   def create
     gyms = params["_json"]
-    @return_gyms = []
+    return_gyms = []
     gyms.each do |gym|
       new_gym = Gym.new(name: gym["name"], lat: gym["lat"], lng: gym["lng"])
       if !Gym.find_by(name: new_gym.name, lat: new_gym.lat, lng: new_gym.lng)
@@ -15,5 +15,4 @@ class Api::V1::GymsController < ApplicationController
       return_gyms << new_gym
     end
   end
-
 end

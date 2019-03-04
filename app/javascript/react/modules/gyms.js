@@ -1,13 +1,25 @@
 const initialState = {
-
+  gyms: []
 };
 
 const gyms = (state = initialState, action) => {
   switch(action.type) {
+    case POPULATE_GYMS:
+      return {...state, gyms: action.gyms}
     default:
       return state;
   }
 };
+
+const POPULATE_GYMS = 'POPULATE_GYMS'
+
+
+const populateGyms = gyms => {
+  return {
+    type: POPULATE_GYMS,
+    gyms: gyms
+  }
+}
 
 const recordGyms = results => {
 
@@ -30,11 +42,8 @@ const recordGyms = results => {
     })
     .then(response => {
       if (response.ok) {
-        return response.json()
+        dispatch(populateGyms(gyms))
       }
-    })
-    .then(gyms => {
-      debugger
     })
   }
 }

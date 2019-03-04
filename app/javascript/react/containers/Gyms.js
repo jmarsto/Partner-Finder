@@ -10,9 +10,19 @@ class Gyms extends Component {
 
   render() {
 
+    let gymList = (
+      <ul>
+        {this.props.gyms.map(gym => {
+          return (
+            <li key={gym.name}>{gym.name}</li>)
+        })}
+      </ul>
+    )
+
     return (
       <div>
         <p>gyms</p>
+        {gymList}
       </div>
     );
   }
@@ -20,6 +30,7 @@ class Gyms extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    gyms: state.gyms.gyms
   }
 }
 
