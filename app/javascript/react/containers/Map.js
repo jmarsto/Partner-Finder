@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import GoogleMapReact from 'google-map-react';
 
+import { recordGyms } from '../modules/gyms';
+
 import LocationPermission from '../components/LocationPermission.js'
 import LocationSearchInput from '../components/LocationSearchInput.js'
 
@@ -35,7 +37,11 @@ class Map extends Component {
       lng: this.props.user.lng
     }
 
-    const handleApiLoaded = (map, maps) => {
+    const recordGyms = (results) => {
+      this.props.recordGyms(results)
+    }
+
+    const getGymsFromGoogle = (map, maps) => {
       var request = {
         location: center,
         radius: '100',
@@ -43,17 +49,9 @@ class Map extends Component {
         type: 'gym'
       };
 
-      function callback(results, status) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-          createMarkers(results);
-        }
-      }
-
-
       function createMarkers(places) {
 
         places.forEach(place => {
-
           let marker = new google.maps.Marker({
             map: map,
             title: place.name,
@@ -61,7 +59,8 @@ class Map extends Component {
           });
 
           let infoWindow = new google.maps.InfoWindow({
-            content: marker.title
+            content: '<div><strong>' + place.name + '</strong><br>' +
+                place.formatted_address + '</div>'
           })
 
           marker.addListener('mouseover', function() {
@@ -73,6 +72,13 @@ class Map extends Component {
           })
 
         })
+      }
+
+      function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          createMarkers(results);
+          recordGyms(results)
+        }
       }
 
       let service = new google.maps.places.PlacesService(map);
@@ -89,7 +95,7 @@ class Map extends Component {
             center={center}
             defaultZoom={11}
             yesIWantToUseGoogleMapApiInternals={true}
-            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+            onGoogleApiLoaded={({ map, maps }) => getGymsFromGoogle(map, maps)}
           >
           </GoogleMapReact>
         </div>
@@ -106,7 +112,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    recordGyms: (results) => dispatch(recordGyms(results))
   }
 }
 
