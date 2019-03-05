@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 
 import { recordGyms } from '../modules/gyms';
+import { setMap } from '../modules/maps';
 
 import LocationPermission from '../components/LocationPermission.js'
 import LocationSearchInput from '../components/LocationSearchInput.js'
@@ -16,7 +17,6 @@ class Map extends Component {
   }
 
   render() {
-
     let locationPrompt
     let mapVisibility
     if (this.props.user.location_permission) {
@@ -41,7 +41,15 @@ class Map extends Component {
       this.props.recordGyms(results)
     }
 
+    const initMap = (map, maps) => {
+      debugger
+      setMap(map, maps)
+      debugger
+      getGymsFromGoogle(map, maps)
+    }
+
     const getGymsFromGoogle = (map, maps) => {
+
       var request = {
         location: center,
         radius: '100',
@@ -95,7 +103,8 @@ class Map extends Component {
             center={center}
             defaultZoom={11}
             yesIWantToUseGoogleMapApiInternals={true}
-            onGoogleApiLoaded={({ map, maps }) => getGymsFromGoogle(map, maps)}
+            onGoogleApiLoaded={({ map, maps }) => initMap(map, maps)}
+            onChange={getGymsFromGoogle(this.props.googleMap, this.props.googleMaps)}
           >
           </GoogleMapReact>
         </div>
@@ -106,13 +115,16 @@ class Map extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user
+    user: state.users.user,
+    googleMap: state.maps.googleMap,
+    googleMaps: state.maps.googleMaps
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    recordGyms: (results) => dispatch(recordGyms(results))
+    recordGyms: (results) => dispatch(recordGyms(results)),
+    setMap: (map, maps) => dispatch(setMap(map, maps))
   }
 }
 
