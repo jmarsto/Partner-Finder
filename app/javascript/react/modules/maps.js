@@ -20,7 +20,7 @@ const SET_MAPS = 'SET_MAPS'
 const setMap = (googleMap, googleMaps) => {
   console.log(googleMap);
   console.log(googleMaps);
-  debugger
+
   return {
     type: SET_MAPS,
     googleMap: googleMap,

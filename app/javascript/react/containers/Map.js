@@ -42,22 +42,23 @@ class Map extends Component {
     }
 
     const initMap = (map, maps) => {
-      debugger
-      setMap(map, maps)
-      debugger
+
+      this.props.setMap(map, maps)
+
       getGymsFromGoogle(map, maps)
     }
 
     const getGymsFromGoogle = (map, maps) => {
 
-      var request = {
+
+      const request = {
         location: center,
         radius: '100',
         query: ['climbing gym'],
         type: 'gym'
       };
 
-      function createMarkers(places) {
+      const createMarkers = (places) => {
 
         places.forEach(place => {
           let marker = new google.maps.Marker({
@@ -82,7 +83,7 @@ class Map extends Component {
         })
       }
 
-      function callback(results, status) {
+      const callback = (results, status) => {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           createMarkers(results);
           recordGyms(results)
