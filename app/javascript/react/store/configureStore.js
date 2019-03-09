@@ -17,3 +17,5 @@ let configureStore = () => {
 };
 
 export default configureStore;
+
+// define dev env vs prod env

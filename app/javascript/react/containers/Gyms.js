@@ -14,7 +14,7 @@ class Gyms extends Component {
       <ul>
         {this.props.gyms.map(gym => {
           return (
-            <li key={gym.name}>{gym.name}</li>)
+            <li key={`${gym.lat}-${gym.lng}`}>{gym.name}</li>)
         })}
       </ul>
     )

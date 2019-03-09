@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 
 import { recordGyms } from '../modules/gyms';
+import { setMap } from '../modules/maps';
 
 import LocationPermission from '../components/LocationPermission.js'
 import LocationSearchInput from '../components/LocationSearchInput.js'
@@ -16,7 +17,6 @@ class Map extends Component {
   }
 
   render() {
-
     let locationPrompt
     let mapVisibility
     if (this.props.user.location_permission) {
@@ -41,15 +41,24 @@ class Map extends Component {
       this.props.recordGyms(results)
     }
 
+    const initMap = (map, maps) => {
+
+      this.props.setMap(map, maps)
+
+      getGymsFromGoogle(map, maps)
+    }
+
     const getGymsFromGoogle = (map, maps) => {
-      var request = {
+
+
+      const request = {
         location: center,
         radius: '100',
         query: ['climbing gym'],
         type: 'gym'
       };
 
-      function createMarkers(places) {
+      const createMarkers = (places) => {
 
         places.forEach(place => {
           let marker = new google.maps.Marker({
@@ -74,7 +83,7 @@ class Map extends Component {
         })
       }
 
-      function callback(results, status) {
+      const callback = (results, status) => {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           createMarkers(results);
           recordGyms(results)
@@ -95,7 +104,8 @@ class Map extends Component {
             center={center}
             defaultZoom={11}
             yesIWantToUseGoogleMapApiInternals={true}
-            onGoogleApiLoaded={({ map, maps }) => getGymsFromGoogle(map, maps)}
+            onGoogleApiLoaded={({ map, maps }) => initMap(map, maps)}
+            onChange={getGymsFromGoogle(this.props.googleMap, this.props.googleMaps)}
           >
           </GoogleMapReact>
         </div>
@@ -106,13 +116,16 @@ class Map extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user
+    user: state.users.user,
+    googleMap: state.maps.googleMap,
+    googleMaps: state.maps.googleMaps
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    recordGyms: (results) => dispatch(recordGyms(results))
+    recordGyms: (results) => dispatch(recordGyms(results)),
+    setMap: (map, maps) => dispatch(setMap(map, maps))
   }
 }
 
