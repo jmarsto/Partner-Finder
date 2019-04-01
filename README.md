@@ -1,24 +1,29 @@
 # README
+### Setup
+To clone this repository, run:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+`$ git clone https://github.com/jmarsto/partner-finder.git`
 
-Things you may want to cover:
+cd into the repository:
 
-* Ruby version
+`$ cd partner-finder`
 
-* System dependencies
+### In action
+Run the following to install dependences:
 
-* Configuration
+```no-highlight
+$ bundle
+$ yarn
+```
 
-* Database creation
+Set up the database:
 
-* Database initialization
+`$ rake db:setup`
 
-* How to run the test suite
+Start the development server:
 
-* Services (job queues, cache servers, search engines, etc.)
+`$ rails s`
 
-* Deployment instructions
+`$ yarn run start`
 
-* ...
+Launch http://localhost:3000/ in the browser.
