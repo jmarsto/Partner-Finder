@@ -18,9 +18,7 @@ const maps = (state = initialState, action) => {
 const SET_MAPS = 'SET_MAPS'
 
 const setMap = (googleMap, googleMaps) => {
-  console.log(googleMap);
-  console.log(googleMaps);
-
+  
   return {
     type: SET_MAPS,
     googleMap: googleMap,

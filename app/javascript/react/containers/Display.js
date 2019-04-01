@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import Map from './Map';
 import Areas from './Areas';
+import Crags from './Crags.js'
+import Gyms from './Gyms.js'
 import RightGutter from './RightGutter';
 
 
@@ -14,14 +16,14 @@ class Display extends Component {
   render() {
     return (
       <div className="row" id="display">
-        <div className="large-2 columns">
-          <Areas />
+        <div className="large-4 columns">
+          <Crags />
         </div>
-        <div className="large-12 columns">
+        <div className="large-8 columns">
           <Map />
         </div>
-        <div className="large-2 columns">
-          <RightGutter />
+        <div className="large-4 columns">
+          <Gyms />
         </div>
       </div>
     )

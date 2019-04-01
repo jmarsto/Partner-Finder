@@ -12,7 +12,7 @@ class Crags extends Component {
 
     return (
       <div>
-        <p>crags</p>
+        <p>Nearby Crags</p>
       </div>
     );
   }

@@ -18,7 +18,7 @@ class LocationPermission extends Component {
 
     return (
       <div>
-        <button onClick={allowLocation}>Use my Location</button>
+        <button id="useMyLocation" onClick={allowLocation}>Use my Location</button>
       </div>
     )
   }
