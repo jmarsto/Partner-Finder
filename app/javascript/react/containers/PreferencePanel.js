@@ -10,26 +10,11 @@ class PreferencePanel extends Component {
 
   render() {
     return (
-      <div className="preference-panel row">
-        <h4>pref panel</h4>
-        <div className="preference">
-          <p className="small-12 columns">pref 1</p>
-          <div className="small-4 columns">
-            <Switch />
-          </div>
-        </div>
-        <div className="preference">
-          <p className="small-12 columns">pref 2</p>
-          <div className="small-4 columns">
-            <Switch />
-          </div>
-        </div>
-        <div className="preference">
-          <p className="small-12 columns">pref 3</p>
-          <div className="small-4 columns">
-            <Switch />
-          </div>
-        </div>
+      <div className="side-panel row">
+        <h4>Preferences</h4>
+        <Switch
+          title="Preference"
+        />
       </div>
     )
   }

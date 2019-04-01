@@ -8,9 +8,9 @@ class FriendsPanel extends Component {
 
   render() {
     return (
-      <div className="preference-panel row">
-        <h4>friends</h4>
-        
+      <div className="side-panel row">
+        <h4>Friends</h4>
+
       </div>
     )
   }

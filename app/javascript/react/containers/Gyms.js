@@ -21,7 +21,7 @@ class Gyms extends Component {
 
     return (
       <div>
-        <p>gyms</p>
+        <p>Nearby Gyms</p>
         {gymList}
       </div>
     );

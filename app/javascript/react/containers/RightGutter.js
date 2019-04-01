@@ -12,7 +12,7 @@ class RightGutter extends Component {
 
     return (
       <div>
-        <p>gutter</p>
+
       </div>
     );
   }

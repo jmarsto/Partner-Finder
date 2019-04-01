@@ -13,7 +13,6 @@ class SideBar extends Component {
     return (
       <div>
         <div className="menu vertical">
-          <h1>sidebar</h1>
           <PreferencePanel />
           <FriendsPanel />
         </div>
