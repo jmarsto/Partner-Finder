@@ -45,10 +45,10 @@ class Map extends Component {
 
       this.props.setMap(map, maps)
 
-      getGymsFromGoogle(map, maps)
+      getGymsAndCrags(map, maps)
     }
 
-    const getGymsFromGoogle = (map, maps) => {
+    const getGymsAndCrags = (map, maps) => {
 
 
       const request = {
@@ -92,6 +92,8 @@ class Map extends Component {
 
       let service = new google.maps.places.PlacesService(map);
       service.textSearch(request, callback);
+      // getRoutesForLatLon with 'center', organize by location
+      // do response LOCATIONS have lat/lng?
     };
 
     return (
@@ -105,7 +107,7 @@ class Map extends Component {
             defaultZoom={11}
             yesIWantToUseGoogleMapApiInternals={true}
             onGoogleApiLoaded={({ map, maps }) => initMap(map, maps)}
-            onChange={getGymsFromGoogle(this.props.googleMap, this.props.googleMaps)}
+            onChange={getGymsAndCrags(this.props.googleMap, this.props.googleMaps)}
           >
           </GoogleMapReact>
         </div>

@@ -18,10 +18,10 @@ class Landing extends Component {
   render() {
     return (
       <div className="row">
-        <div className="medium-3 columns sidebar">
+        <div className="large-3 columns sidebar">
           <Sidebar />
         </div>
-        <div className="medium-13 columns">
+        <div className="large-13 columns">
           <Display />
         </div>
       </div>
