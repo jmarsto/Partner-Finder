@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 
 import { recordGyms } from '../modules/gyms';
+import { requestCrags } from '../modules/crags';
 import { setMap } from '../modules/maps';
 
 import LocationPermission from '../components/LocationPermission.js'
@@ -39,6 +40,10 @@ class Map extends Component {
 
     const recordGyms = (results) => {
       this.props.recordGyms(results)
+    }
+
+    const requestCrags = (location) => {
+      this.props.requestCrags(location)
     }
 
     const initMap = (map, maps) => {
@@ -92,8 +97,9 @@ class Map extends Component {
 
       let service = new google.maps.places.PlacesService(map);
       service.textSearch(request, callback);
-      // getRoutesForLatLon with 'center', organize by location
-      // do response LOCATIONS have lat/lng?
+      if (center.lat) {
+        requestCrags(center);
+      }
     };
 
     return (
@@ -127,6 +133,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     recordGyms: (results) => dispatch(recordGyms(results)),
+    requestCrags: (location) => dispatch(requestCrags(location)),
     setMap: (map, maps) => dispatch(setMap(map, maps))
   }
 }
