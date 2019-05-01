@@ -64,7 +64,6 @@ class Map extends Component {
       };
 
       const createMarkers = (places) => {
-
         places.forEach(place => {
           let marker = new google.maps.Marker({
             map: map,
@@ -84,8 +83,8 @@ class Map extends Component {
           marker.addListener('mouseout', function() {
             infoWindow.close();
           })
-
         })
+
       }
 
       const callback = (results, status) => {
@@ -126,7 +125,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.users.user,
     googleMap: state.maps.googleMap,
-    googleMaps: state.maps.googleMaps
+    googleMaps: state.maps.googleMaps,
+    crags: state.crags.crags
   }
 }
 

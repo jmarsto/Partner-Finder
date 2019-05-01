@@ -41,8 +41,8 @@ const requestCrags = location => {
       }
     })
     .then(response => response.json())
-    .then(body => {
-      debugger
+    .then(crags => {
+      dispatch(populateCrags(crags))
     })
   }
 }

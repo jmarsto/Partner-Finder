@@ -5,8 +5,10 @@ class Api::V1::CragsController < ApplicationController
   end
 
   def create
-    location = params["crag"]
+    location = { lat: params["lat"], lng: params["lng"] }
     response = MountainProjectRequest.new(location).response
+    # if the response["success"] != 1, fail
     crags = CragSanitizer.new(response).crags
+    render json: crags
   end
 end
