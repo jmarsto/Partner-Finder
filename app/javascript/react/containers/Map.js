@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 
 import { recordGyms } from '../modules/gyms';
+import { requestCrags } from '../modules/crags';
 import { setMap } from '../modules/maps';
 
 import LocationPermission from '../components/LocationPermission.js'
@@ -14,6 +15,57 @@ class Map extends Component {
     super(props)
     this.state = {
     }
+  }
+
+  createMarkers = (places) => {
+    places.forEach(place => {
+      let map = this.props.googleMap
+      let marker
+      let infoWindow
+
+      if (place.geometry) {
+        // for GYMS
+        marker = new google.maps.Marker({
+          map: map,
+          title: place.name,
+          position: place.geometry.location
+        });
+
+        infoWindow = new google.maps.InfoWindow({
+          content: '<div><strong>' + place.name + '</strong><br>' +
+              place.formatted_address + '</div>'
+        })
+      } else {
+        // for CRAGS
+        marker = new google.maps.Marker({
+          map: map,
+          title: place.name,
+          icon: {
+            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+          },
+          position: {
+            lat: place.lat,
+            lng: place.lng
+          }
+        });
+
+        infoWindow = new google.maps.InfoWindow({
+          content: '<div><strong>' + place.name + '</strong><br>' + '</div>'
+        })
+      }
+
+      marker.addListener('mouseover', function() {
+        infoWindow.open(map, marker)
+      })
+
+      marker.addListener('mouseout', function() {
+        infoWindow.close();
+      })
+    })
+  }
+
+  componentDidUpdate() {
+    this.createMarkers(this.props.crags)
   }
 
   render() {
@@ -41,16 +93,18 @@ class Map extends Component {
       this.props.recordGyms(results)
     }
 
+    const requestCrags = (location) => {
+      this.props.requestCrags(location)
+    }
+
     const initMap = (map, maps) => {
 
       this.props.setMap(map, maps)
 
-      getGymsFromGoogle(map, maps)
+      getGymsAndCrags(map, maps)
     }
 
-    const getGymsFromGoogle = (map, maps) => {
-
-
+    const getGymsAndCrags = (map, maps) => {
       const request = {
         location: center,
         radius: '100',
@@ -58,40 +112,18 @@ class Map extends Component {
         type: 'gym'
       };
 
-      const createMarkers = (places) => {
-
-        places.forEach(place => {
-          let marker = new google.maps.Marker({
-            map: map,
-            title: place.name,
-            position: place.geometry.location
-          });
-
-          let infoWindow = new google.maps.InfoWindow({
-            content: '<div><strong>' + place.name + '</strong><br>' +
-                place.formatted_address + '</div>'
-          })
-
-          marker.addListener('mouseover', function() {
-            infoWindow.open(map, marker)
-          })
-
-          marker.addListener('mouseout', function() {
-            infoWindow.close();
-          })
-
-        })
-      }
-
       const callback = (results, status) => {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-          createMarkers(results);
+          this.createMarkers(results);
           recordGyms(results)
         }
       }
 
       let service = new google.maps.places.PlacesService(map);
       service.textSearch(request, callback);
+      if (center.lat) {
+        requestCrags(center);
+      }
     };
 
     return (
@@ -105,7 +137,6 @@ class Map extends Component {
             defaultZoom={11}
             yesIWantToUseGoogleMapApiInternals={true}
             onGoogleApiLoaded={({ map, maps }) => initMap(map, maps)}
-            onChange={getGymsFromGoogle(this.props.googleMap, this.props.googleMaps)}
           >
           </GoogleMapReact>
         </div>
@@ -118,13 +149,15 @@ const mapStateToProps = (state) => {
   return {
     user: state.users.user,
     googleMap: state.maps.googleMap,
-    googleMaps: state.maps.googleMaps
+    googleMaps: state.maps.googleMaps,
+    crags: state.crags.crags
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     recordGyms: (results) => dispatch(recordGyms(results)),
+    requestCrags: (location) => dispatch(requestCrags(location)),
     setMap: (map, maps) => dispatch(setMap(map, maps))
   }
 }

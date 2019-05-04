@@ -10,10 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_24_042222) do
+ActiveRecord::Schema.define(version: 2019_05_01_150810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "areas", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "destination_id"
+    t.index ["destination_id"], name: "index_areas_on_destination_id"
+  end
+
+  create_table "crags", force: :cascade do |t|
+    t.string "name", null: false
+    t.float "lat"
+    t.float "lng"
+    t.bigint "area_id"
+    t.index ["area_id"], name: "index_crags_on_area_id"
+  end
+
+  create_table "destinations", force: :cascade do |t|
+    t.string "name", null: false
+  end
 
   create_table "friendships", force: :cascade do |t|
     t.bigint "user_id"
@@ -35,6 +53,19 @@ ActiveRecord::Schema.define(version: 2019_02_24_042222) do
     t.bigint "gym_id"
     t.index ["gym_id"], name: "index_memberships_on_gym_id"
     t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.float "lat"
+    t.float "lng"
+    t.float "stars"
+    t.float "pitches"
+    t.string "name", null: false
+    t.string "rating"
+    t.string "discipline"
+    t.string "url"
+    t.bigint "crag_id"
+    t.index ["crag_id"], name: "index_routes_on_crag_id"
   end
 
   create_table "users", force: :cascade do |t|

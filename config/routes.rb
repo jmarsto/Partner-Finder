@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:index, :update]
       resources :gyms, only: [:index, :create]
+      resources :crags, only: [:index, :create]
     end
   end
 end

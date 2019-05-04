@@ -9,10 +9,18 @@ class Crags extends Component {
   }
 
   render() {
-
+    let cragList = (
+      <ul>
+        {this.props.crags.map(crag => {
+          return (
+            <li key={`${crag.lat}-${crag.lng}`}>{crag.name}</li>)
+        })}
+      </ul>
+    )
     return (
       <div>
         <p>Nearby Crags</p>
+        {cragList}
       </div>
     );
   }
@@ -20,6 +28,8 @@ class Crags extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    crags: state.crags.crags
+
   }
 }
 
