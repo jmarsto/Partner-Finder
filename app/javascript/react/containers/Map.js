@@ -17,6 +17,57 @@ class Map extends Component {
     }
   }
 
+  createMarkers = (places) => {
+    places.forEach(place => {
+      let map = this.props.googleMap
+      let marker
+      let infoWindow
+
+      if (place.geometry) {
+        // for GYMS
+        marker = new google.maps.Marker({
+          map: map,
+          title: place.name,
+          position: place.geometry.location
+        });
+
+        infoWindow = new google.maps.InfoWindow({
+          content: '<div><strong>' + place.name + '</strong><br>' +
+              place.formatted_address + '</div>'
+        })
+      } else {
+        // for CRAGS
+        marker = new google.maps.Marker({
+          map: map,
+          title: place.name,
+          icon: {
+            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+          },
+          position: {
+            lat: place.lat,
+            lng: place.lng
+          }
+        });
+
+        infoWindow = new google.maps.InfoWindow({
+          content: '<div><strong>' + place.name + '</strong><br>' + '</div>'
+        })
+      }
+
+      marker.addListener('mouseover', function() {
+        infoWindow.open(map, marker)
+      })
+
+      marker.addListener('mouseout', function() {
+        infoWindow.close();
+      })
+    })
+  }
+
+  componentDidUpdate() {
+    this.createMarkers(this.props.crags)
+  }
+
   render() {
     let locationPrompt
     let mapVisibility
@@ -54,8 +105,6 @@ class Map extends Component {
     }
 
     const getGymsAndCrags = (map, maps) => {
-
-
       const request = {
         location: center,
         radius: '100',
@@ -63,33 +112,9 @@ class Map extends Component {
         type: 'gym'
       };
 
-      const createMarkers = (places) => {
-        places.forEach(place => {
-          let marker = new google.maps.Marker({
-            map: map,
-            title: place.name,
-            position: place.geometry.location
-          });
-
-          let infoWindow = new google.maps.InfoWindow({
-            content: '<div><strong>' + place.name + '</strong><br>' +
-                place.formatted_address + '</div>'
-          })
-
-          marker.addListener('mouseover', function() {
-            infoWindow.open(map, marker)
-          })
-
-          marker.addListener('mouseout', function() {
-            infoWindow.close();
-          })
-        })
-
-      }
-
       const callback = (results, status) => {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-          createMarkers(results);
+          this.createMarkers(results);
           recordGyms(results)
         }
       }
@@ -112,7 +137,6 @@ class Map extends Component {
             defaultZoom={11}
             yesIWantToUseGoogleMapApiInternals={true}
             onGoogleApiLoaded={({ map, maps }) => initMap(map, maps)}
-            onChange={getGymsAndCrags(this.props.googleMap, this.props.googleMaps)}
           >
           </GoogleMapReact>
         </div>

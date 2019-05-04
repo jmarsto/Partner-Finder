@@ -25,7 +25,7 @@ const REQUEST_CRAGS = 'REQUEST_CRAGS'
 const requestCrags = location => {
   const { lat, lng } = location
   return dispatch => {
-    return fetch(`/api/v1/crags/`, {
+    fetch(`/api/v1/crags/`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
