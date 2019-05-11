@@ -13,7 +13,7 @@ class Crags extends Component {
       <ul>
         {this.props.crags.map(crag => {
           return (
-            <li key={`${crag.lat}-${crag.lng}`}>{crag.name}</li>)
+            <li key={`${crag.lat}-${crag.lng}-${crag.name}`}>{crag.name}</li>)
         })}
       </ul>
     )

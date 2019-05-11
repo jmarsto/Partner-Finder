@@ -7,7 +7,6 @@ import { recordGyms } from '../modules/gyms';
 import { requestCrags } from '../modules/crags';
 import { setMap } from '../modules/maps';
 
-import LocationPermission from '../components/LocationPermission.js'
 import LocationSearchInput from '../components/LocationSearchInput.js'
 
 class Map extends Component {
@@ -15,6 +14,10 @@ class Map extends Component {
     super(props)
     this.state = {
     }
+  }
+
+  change = () => {
+    console.log("change");
   }
 
   createMarkers = (places) => {
@@ -69,15 +72,6 @@ class Map extends Component {
   }
 
   render() {
-    let locationPrompt
-    let mapVisibility
-    if (this.props.user.location_permission) {
-      mapVisibility = "visible"
-      locationPrompt = <LocationSearchInput />
-    } else {
-      mapVisibility = "hidden"
-      locationPrompt = <LocationPermission />
-    }
 
     let defaultCenter = {
       lat: 40.0150,
@@ -101,10 +95,10 @@ class Map extends Component {
 
       this.props.setMap(map, maps)
 
-      getGymsAndCrags(map, maps)
+      getGymsAndCrags()
     }
 
-    const getGymsAndCrags = (map, maps) => {
+    const getGymsAndCrags = () => {
       const request = {
         location: center,
         radius: '100',
@@ -119,7 +113,7 @@ class Map extends Component {
         }
       }
 
-      let service = new google.maps.places.PlacesService(map);
+      let service = new google.maps.places.PlacesService(this.props.googleMap);
       service.textSearch(request, callback);
       if (center.lat) {
         requestCrags(center);
@@ -128,8 +122,8 @@ class Map extends Component {
 
     return (
       <div>
-        {locationPrompt}
-        <div style={{ height: '80vh', visibility: mapVisibility }}>
+        <LocationSearchInput />
+        <div style={{ height: '80vh' }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: "AIzaSyC2OOyKO15UdGHpZvog3vqzv6ULUi0zVVM" }}
             defaultCenter={defaultCenter}
@@ -137,6 +131,7 @@ class Map extends Component {
             defaultZoom={11}
             yesIWantToUseGoogleMapApiInternals={true}
             onGoogleApiLoaded={({ map, maps }) => initMap(map, maps)}
+            onChange={getGymsAndCrags}
           >
           </GoogleMapReact>
         </div>
